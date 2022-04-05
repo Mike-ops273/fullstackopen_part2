@@ -18,17 +18,17 @@ const App = () => {
         exercises: 14,
         id: 3,
       },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
+      },
     ],
   };
-  const map1 = course.parts.map((items) => items);
+
   return (
     <div>
       <Course course={course} />
-      {course.parts.map((part) => (
-        <p key={part.id}>
-          {part.name} {part.exercises}
-        </p>
-      ))}
     </div>
   );
 };
@@ -53,18 +53,14 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <div>
-      content component testing map
-      <Part
-        partName={props.parts[0].name}
-        partExercises={props.parts[0].exercises}
-      />
-      <Part
-        partName={props.parts[1].name}
-        partExercises={props.parts[1].exercises}
-      />
-      <Part
-        partName={props.parts[2].name}
-        partExercises={props.parts[2].exercises}
+      {props.parts.map((part) => (
+        <Part key={part.id} name={part.name} exercises={part.exercises} />
+      ))}
+      <Total
+        total={props.parts.reduce(
+          (previous, current) => previous + current.exercises,
+          0
+        )}
       />
     </div>
   );
@@ -72,11 +68,17 @@ const Content = (props) => {
 
 const Part = (props) => {
   return (
-    <div>
-      <p>
-        {props.partName} {props.partExercises}
-      </p>
-    </div>
+    <p>
+      {props.name} {props.exercises}
+    </p>
+  );
+};
+
+const Total = (props) => {
+  return (
+    <p>
+      <b>Total of {props.total} exercises</b>
+    </p>
   );
 };
 
