@@ -20,10 +20,15 @@ const App = () => {
       },
     ],
   };
-
+  const map1 = course.parts.map((items) => items);
   return (
     <div>
       <Course course={course} />
+      {course.parts.map((part) => (
+        <p key={part.id}>
+          {part.name} {part.exercises}
+        </p>
+      ))}
     </div>
   );
 };
@@ -31,7 +36,46 @@ const App = () => {
 const Course = (props) => {
   return (
     <div>
-      <p>{props.course.id}</p>
+      <Header title={props.course.name} />
+      <Content parts={props.course.parts} />
+    </div>
+  );
+};
+
+const Header = (props) => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+    </div>
+  );
+};
+
+const Content = (props) => {
+  return (
+    <div>
+      content component testing map
+      <Part
+        partName={props.parts[0].name}
+        partExercises={props.parts[0].exercises}
+      />
+      <Part
+        partName={props.parts[1].name}
+        partExercises={props.parts[1].exercises}
+      />
+      <Part
+        partName={props.parts[2].name}
+        partExercises={props.parts[2].exercises}
+      />
+    </div>
+  );
+};
+
+const Part = (props) => {
+  return (
+    <div>
+      <p>
+        {props.partName} {props.partExercises}
+      </p>
     </div>
   );
 };
