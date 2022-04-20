@@ -48,7 +48,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Web development curriculum</h1>
+      <h1>Web development curriculumwdwdwdwdwdwdw</h1>
       {/*sending the whole data structure to <Course>*/}
       <Course courses={courses} />
     </div>
