@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Names from "./components/Names";
+import Name from "./components/Name";
 
 const App = () => {
   //store persons
@@ -40,7 +40,7 @@ const App = () => {
       <h2>Numbers</h2>
       <p>
         {persons.map((person) => (
-          <Names key={person.name} person={person} />
+          <Name key={person.name} person={person} />
         ))}
       </p>
     </div>

@@ -1,6 +1,6 @@
 //display names 
-const Names = ({ person }) => {
+const Name = ({ person }) => {
     return <li>{person.name}</li>
 } 
 
-export default Names; 
+export default Name; 
