@@ -5,25 +5,36 @@ const App = () => {
   //store persons
   const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
   //add new person
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState("");  
 
   //fire function on click
   const clickedAdd = (event) => {
     event.preventDefault();
-    console.log("clicked!");
     const personObject = {
-      name: newName,
-    };
-    //update state
-    setPersons(persons.concat(personObject));
-    setNewName(" ");
+      name: newName, 
+    }; 
+    //check for duplicates 
+    for (let i=0; i<persons.length; i++) {
+      let stringifiedName = JSON.stringify(persons); 
+      if(stringifiedName.includes(newName)) {
+        //prevent duplicates
+        console.log("duplicate name!"); 
+        alert(`${newName} is already added to phonebook`) 
+        break;
+      } else {
+        //allow adding new name
+        console.log("no duplicate");
+        setPersons(persons.concat(personObject));
+        setNewName("");
+      }
+    }
   };
 
   //handle updating input element
   const handleChange = (event) => {
     setNewName(event.target.value);
-    console.log(event.target.value);
   };
+
 
   return (
     <div>
