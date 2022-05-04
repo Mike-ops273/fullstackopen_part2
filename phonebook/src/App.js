@@ -18,23 +18,18 @@ const App = () => {
       number: newNumber,
     }; 
     //check for duplicates 
-    for (let i=0; i<persons.length; i++) {
-      let stringifiedName = JSON.stringify(persons); 
-      if(stringifiedName.includes(newName)) {
-        //prevent duplicates
-        console.log("duplicate name!"); 
-        alert(`${newName} is already in the phonebook`) 
-        break;
-      } else {
-        //allow adding new name
-        console.log("no duplicate");
-        setPersons(persons.concat(personObject)); 
-        //reset form fields for next input
-        setNewName(""); 
-        setNewNumber("");
-      }
+    if (persons.find(person => person.name === newName)) {
+      //reject duplicate
+      console.log("duplicate"); 
+      alert(`${newName} is already in the phonebook`)
+    } else {
+      console.log("no duplicates");  
+      //add new name and number as well as reset form fields
+      setPersons(persons.concat(personObject));
+      setNewName(""); 
+      setNewNumber("");
     }
-  };
+  }; 
 
   //handle updating name input field
   const handleChange = (event) => {
@@ -44,7 +39,6 @@ const App = () => {
   const handleChangeNumber = (event) => {
     setNewNumber(event.target.value);
   };
-
 
   return (
     <div>
