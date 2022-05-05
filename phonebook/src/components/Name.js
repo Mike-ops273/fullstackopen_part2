@@ -1,4 +1,4 @@
-//display names 
+//display name(s) 
 const Name = ({ person }) => { 
     return <li>{person.name}: {person.number}</li>
 } 
