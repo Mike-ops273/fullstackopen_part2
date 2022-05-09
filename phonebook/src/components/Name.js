@@ -1,8 +1,10 @@
-//display name(s) 
-const Name = ({ person }) => { 
-    return <li>{person.name}: {person.number}</li>
-} 
+//display name(s)
+const Name = ({ person }) => {
+  return (
+    <li>
+      {person.name}: {person.number}
+    </li>
+  );
+};
 
-
-export default Name; 
-
+export default Name;
