@@ -1,5 +1,4 @@
 //display filtered name(s)
-//show filtered names
 const FilteredName = ({ filteredPerson }) => {
   return (
     <li>
