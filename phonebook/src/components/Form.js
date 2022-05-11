@@ -1,15 +1,16 @@
 //the form
 const Form = ({
-  clickedAdd,
+  handleAddClick,
   newName,
   handleChange,
   newNumber,
   handleChangeNumber,
 }) => {
-  return (
-    <form onSubmit={clickedAdd}>
-      {console.log(clickedAdd)}
-      {console.log(newName)}
+  return ( 
+    <form onSubmit={handleAddClick}> 
+    <h2>Add New</h2>
+      {/*console.log(handleAddClick)*/}
+      {/*console.log(newName)*/}
       <div>debug: {newName}</div>
       <div>
         name: <input value={newName} onChange={handleChange} />
@@ -25,3 +26,4 @@ const Form = ({
 };
 
 export default Form;
+
