@@ -1,26 +1,39 @@
-import { useState } from "react"; 
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Filter from "./components/Filter";
-import Name from "./components/Name"; 
+import Name from "./components/Name";
 import Form from "./components/Form";
 
 const App = () => {
   //store persons & phone numbers
+  const [persons, setPersons] = useState([]);
+  /*
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "040-1234567" },
     { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
     { name: "Dan Abramov", number: "12-43-234345", id: 3 },
     { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
+  */
   const [newName, setNewName] = useState(""); //add new person
   const [newNumber, setNewNumber] = useState(""); //add new number
   const [filter, setNewFilter] = useState(""); //filter input
+
+  
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
+  console.log("render", persons.length, "persons"); //event loop? 
+  
 
   //update filter field
   const handleFilterChange = (event) => {
     setNewFilter(event.target.value);
     console.log(event.target.value);
-  }; 
-  
+  };
+
   //handle updating name input field
   const handleChange = (event) => {
     setNewName(event.target.value);
@@ -58,12 +71,9 @@ const App = () => {
   return (
     <div>
       <div>debug: {newName}</div>
-      <h1>Phonebook</h1> 
+      <h1>Phonebook</h1>
 
-      <Filter
-        filter={filter}
-        handleFilterChange={handleFilterChange}
-      /> 
+      <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
       <Form
         handleAddClick={handleAddClick}
@@ -79,4 +89,3 @@ const App = () => {
 };
 
 export default App;
-
