@@ -26,39 +26,34 @@ const Countries = ({ countries, query }) => {
     //a singular result
     return (
       <>
-        <SingleCountry queryCountries={queryCountries} />
+        <SingleCountry queryCountry={queryCountries[0]} /> 
       </>
     );
+  } else {
+    return (
+      <p>No matches</p>
+    )
   }
-};
+}; 
 
-const SingleCountry = ({ queryCountries }) => {
+const SingleCountry = ({queryCountry}) => {
   return (
     <>
-      {console.log("length inside", queryCountries.length)}
-      {console.log(queryCountries)}
-
-      {queryCountries.map((country) => (
-        <ul key={country.name.common}>
-          <h2>{country.name.common}</h2>
-          <li>capital {country.capital}</li>
-          <li>area: {country.area}</li>
-        </ul>
-      ))}
-      <h2>Languages</h2>
-      {console.log(queryCountries[0].languages)}
-      {/*queryCountries[0].languages*/}
-      {Object.values(queryCountries[0].languages).map((value, index) => {
+      {console.log(queryCountry)} 
+      <h2>{queryCountry.name.common}</h2> 
+      <li>capital: {queryCountry.capital}</li> 
+      <li>area: {queryCountry.area}</li> 
+      <h2>Languages</h2> 
+      {Object.values(queryCountry.languages).map((value, index) => {
         return (
           <div key={index}>
             <p>{value}</p>
           </div>
         );
       })}
-      <h1>{/*queryCountries[0].flag*/}</h1>
-      <img src={queryCountries[0].flags.png} />
+      <img src={queryCountry.flags.png} />
     </>
-  );
-};
+  )
+}
 
 export default Countries;
