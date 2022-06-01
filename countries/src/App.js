@@ -5,7 +5,10 @@ import Countries from "./components/Countries";
 
 const App = () => {
   const [countries, setCountries] = useState([]); //countries
-  const [query, setQuery] = useState(""); //query for a country
+  const [query, setQuery] = useState(""); //query for a country 
+
+  
+  
 
   //retrieve & store data from restcountries
   useEffect(() => {

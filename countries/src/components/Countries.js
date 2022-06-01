@@ -1,24 +1,45 @@
-//show countries
+//the purpose of this component is to show countries
+import { useState } from "react";
+
 const Countries = ({ countries, query }) => {
-  const reg = new RegExp(query, "i");
-  let queryCountries = countries.filter((country) =>
+  const [countryView, setCountryView] = useState({}); //object for showing country view
+
+  const reg = new RegExp(query, "i"); //assists in querry field
+  let queryCountries = countries.filter((country) => //store filtered countries in queryCountries
     country.name.common.match(reg)
   );
+
+  //using countryView, set & show select country data
+  const clickedShow = () => {
+    const countryViewObject = {
+      name: queryCountries[index].name.common, //doesnt work
+      language: "language", 
+      population: "population", 
+      flag: "flag",
+    }; 
+    setCountryView(countryViewObject);
+  }
+
+  //the display logic
   //show empty list when no query specified
-  console.log(countries);
+  console.log("return of promise:", countries);
   if (query == "") {
     return <>{""}</>;
   } else if (queryCountries.length > 10) {
-    //if too many results
+    //if too many results, encourage specification
     return <>Too many countries, please be more specific</>;
   } else if (queryCountries.length <= 10 && queryCountries.length > 1) {
-    //if 10 results or less
-    console.log("in here");
+    //if 10 results or less, display matched countries
     console.log(queryCountries);
     return (
       <>
-        {queryCountries.map((country) => (
-          <ul key={country.name.common}>{country.name.common}</ul>
+        {queryCountries.map((country, index) => (
+          <ul key={country.name.common}>
+            {country.name.common} 
+            <button onClick={clickedShow} index={index}>show</button> 
+            <br />
+            {countryView.name}
+          </ul>
         ))}
       </>
     );
@@ -29,7 +50,8 @@ const Countries = ({ countries, query }) => {
         <SingleCountry queryCountry={queryCountries[0]} /> 
       </>
     );
-  } else {
+  } else { 
+    //when there are no matches
     return (
       <p>No matches</p>
     )
