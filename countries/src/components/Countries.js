@@ -1,24 +1,18 @@
 //the purpose of this component is to show countries
-import { useState } from "react";
-
-const Countries = ({ countries, query }) => {
-  const [countryView, setCountryView] = useState({}); //object for showing country view
-
+const Countries = ({ countries, query, setQuery }) => {
   const reg = new RegExp(query, "i"); //assists in querry field
-  let queryCountries = countries.filter((country) => //store filtered countries in queryCountries
+
+  //store filtered countries in queryCountries
+  let queryCountries = countries.filter((country) =>
     country.name.common.match(reg)
   );
 
-  //using countryView, set & show select country data
-  const clickedShow = () => {
-    const countryViewObject = {
-      name: queryCountries[index].name.common, //doesnt work
-      language: "language", 
-      population: "population", 
-      flag: "flag",
-    }; 
-    setCountryView(countryViewObject);
-  }
+  //button will set the selected country as query via event.target.value
+  const clickedShowBtn = (event) => {
+    console.log("clicked show button!");
+    console.log(event.target.value);
+    setQuery(event.target.value);
+  };
 
   //the display logic
   //show empty list when no query specified
@@ -35,37 +29,40 @@ const Countries = ({ countries, query }) => {
       <>
         {queryCountries.map((country, index) => (
           <ul key={country.name.common}>
-            {country.name.common} 
-            <button onClick={clickedShow} index={index}>show</button> 
-            <br />
-            {countryView.name}
+            {country.name.common}
+            <button
+              onClick={clickedShowBtn}
+              index={index}
+              value={country.name.common}
+            >
+              show
+            </button>
           </ul>
         ))}
       </>
     );
   } else if (queryCountries.length == 1) {
-    //a singular result
+    //for when the query results in a singular country
     return (
       <>
-        <SingleCountry queryCountry={queryCountries[0]} /> 
+        <SingleCountry queryCountry={queryCountries[0]} />
       </>
     );
-  } else { 
+  } else {
     //when there are no matches
-    return (
-      <p>No matches</p>
-    )
+    return <p>No matches</p>;
   }
-}; 
+};
 
-const SingleCountry = ({queryCountry}) => {
+//renders a single country with facts and a flag
+const SingleCountry = ({ queryCountry }) => {
   return (
     <>
-      {console.log(queryCountry)} 
-      <h2>{queryCountry.name.common}</h2> 
-      <li>capital: {queryCountry.capital}</li> 
-      <li>area: {queryCountry.area}</li> 
-      <h2>Languages</h2> 
+      {console.log(queryCountry)}
+      <h2>{queryCountry.name.common}</h2>
+      <li>capital: {queryCountry.capital}</li>
+      <li>area: {queryCountry.area}</li>
+      <h2>Languages</h2>
       {Object.values(queryCountry.languages).map((value, index) => {
         return (
           <div key={index}>
@@ -75,7 +72,7 @@ const SingleCountry = ({queryCountry}) => {
       })}
       <img src={queryCountry.flags.png} />
     </>
-  )
-}
+  );
+};
 
 export default Countries;

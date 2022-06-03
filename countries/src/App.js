@@ -5,10 +5,7 @@ import Countries from "./components/Countries";
 
 const App = () => {
   const [countries, setCountries] = useState([]); //countries
-  const [query, setQuery] = useState(""); //query for a country 
-
-  
-  
+  const [query, setQuery] = useState(""); //query for a country
 
   //retrieve & store data from restcountries
   useEffect(() => {
@@ -30,7 +27,7 @@ const App = () => {
       <h1>Countries</h1>
       <Query query={query} handleFilterChange={handleFilterChange} />
       <br />
-      <Countries countries={countries} query={query} />
+      <Countries countries={countries} query={query} setQuery={setQuery} />
     </div>
   );
 };
