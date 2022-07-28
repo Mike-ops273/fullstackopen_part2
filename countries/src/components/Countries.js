@@ -1,4 +1,7 @@
 //the purpose of this component is to show countries
+
+import WeatherData from "./WeatherData";
+
 const Countries = ({ countries, query, setQuery }) => {
   const reg = new RegExp(query, "i"); //assists in querry field
 
@@ -70,7 +73,9 @@ const SingleCountry = ({ queryCountry }) => {
           </div>
         );
       })}
-      <img src={queryCountry.flags.png} />
+      <img src={queryCountry.flags.png} alt={"flag"} />
+      <br />
+      <WeatherData queryCountry={queryCountry} />
     </>
   );
 };
