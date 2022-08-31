@@ -1,5 +1,5 @@
 //handle filter input field
-const Filter = ({ filterVariable, handleFilterChange }) => {
+const Filter = ({ filterVariable, handleFilterChange }) => { 
   return (
     <div>
       Filter: <input value={filterVariable} onChange={handleFilterChange} />

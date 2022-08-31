@@ -3,11 +3,13 @@ import axios from "axios";
 import Filter from "./components/Filter";
 import Name from "./components/Name";
 import Form from "./components/Form";
+import personService from "./services/personService";
 
 const App = () => {
   //store persons & phone numbers
   const [persons, setPersons] = useState([]);
-  /*
+
+  /* old code
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "040-1234567" },
     { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
@@ -15,18 +17,26 @@ const App = () => {
     { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
   */
+  
   const [newName, setNewName] = useState(""); //add new person
   const [newNumber, setNewNumber] = useState(""); //add new number
   const [filter, setNewFilter] = useState(""); //filter input
 
-  
+  /*
   useEffect(() => {
     axios.get("http://localhost:3001/persons").then((response) => {
       setPersons(response.data);
     });
   }, []);
-  console.log("render", persons.length, "persons"); //event loop? 
-  
+  console.log("render", persons.length, "persons"); //event loop?
+  */
+ useEffect(() => {
+  personService
+    .getAll()
+    .then(response => {
+      setPersons(response.data)
+    })
+ }, []) //this [] stops an infinite render loop
 
   //update filter field
   const handleFilterChange = (event) => {
@@ -63,6 +73,16 @@ const App = () => {
       console.log("no duplicates");
       //add new name and number permanently as well as reset form fields
       setPersons(persons.concat(personObject));
+      /*
+      axios
+        .post("http://localhost:3001/persons", personObject)
+        .then(response=>console.log(response));
+      */
+     personService
+      .create(personObject) //creates a new pesonObject to be stored on the server
+      .then(response => {
+        console.log(response);
+      })
       setNewName("");
       setNewNumber("");
     }
