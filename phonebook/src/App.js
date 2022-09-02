@@ -66,7 +66,7 @@ const App = () => {
     let personIdForServer = persons.find((person) => person.name === newName) //store person cause it keeps disappearing
     console.log(personIdForServer);
     //check for duplicate person
-    if (persons.find((person) => person.name === newName)) {
+    if (personIdForServer) {
       //reject duplicate
       console.log("duplicate");
       //alert(`${newName} is already in the phonebook`);
@@ -80,7 +80,7 @@ const App = () => {
       //passed duplicate test
       console.log("no duplicates");
       //add new name and number permanently as well as reset form fields
-      setPersons(persons.concat(personObject));
+      //setPersons(persons.concat(personObject)); //frontend and backend may not match if promise rejects
       /*
       axios
         .post("http://localhost:3001/persons", personObject)
@@ -90,6 +90,7 @@ const App = () => {
       .create(personObject) //creates a new pesonObject to be stored on the server
       .then(response => {
         console.log(response);
+        setPersons(persons.concat(personObject)); //backend and frontend will have matching data
       })
       setNewName("");
       setNewNumber("");
