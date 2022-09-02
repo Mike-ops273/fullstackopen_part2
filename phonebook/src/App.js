@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Filter from "./components/Filter";
-import Name from "./components/Name";
+import Names from "./components/Names";
 import Form from "./components/Form";
 import personService from "./services/personService";
 
@@ -63,11 +63,19 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
+    let personIdForServer = persons.find((person) => person.name === newName) //store person cause it keeps disappearing
+    console.log(personIdForServer);
     //check for duplicate person
     if (persons.find((person) => person.name === newName)) {
       //reject duplicate
       console.log("duplicate");
-      alert(`${newName} is already in the phonebook`);
+      //alert(`${newName} is already in the phonebook`);
+      if(window.confirm(`${newName} is already in the phonebook, update number?`)) {
+        console.log(persons);
+        //axios.put(`http://localhost:3001/persons/${personIdForServer.id}`, personObject)
+        personService
+        .update(personIdForServer.id, personObject)
+      }
     } else {
       //passed duplicate test
       console.log("no duplicates");
@@ -103,7 +111,7 @@ const App = () => {
         handleChangeNumber={handleChangeNumber}
       />
 
-      <Name persons={persons} filter={filter} />
+      <Names persons={persons} filter={filter} />
     </div>
   );
 };

@@ -1,22 +1,9 @@
 //import personService to facilitate deleting person
-import personService from "../services/personService"
+import personService from "../services/personService";
+import DeletePersonButton from "./DeletePersonButton";
 
 //display name(s)
-const Name = ({ persons, filter }) => {
-
-  const Button = (props) => { //to remove person
-    const removePerson = () => {
-      console.log(props.id);
-      if (window.confirm(`Delete ${props.name}?`)) {
-        personService
-        .remove(props.id)
-        console.log("clicked yes");
-      } 
-    }
-    return (
-      <button onClick={removePerson}>Delete</button>
-    )
-  }
+const Names = ({ persons, filter }) => {
 
   const reg = new RegExp(filter, "i");
   let filteredList = persons.filter((person) => person.name.match(reg));
@@ -26,7 +13,7 @@ const Name = ({ persons, filter }) => {
         {persons.map((person) => (
           <li key={person.name}>
             {" "}
-            {person.name}: {person.number} <Button name={person.name} number={person.number} id={person.id} />
+            {person.name}: {person.number} <DeletePersonButton name={person.name} number={person.number} id={person.id} />
           </li>
         ))}
       </>
@@ -44,4 +31,4 @@ const Name = ({ persons, filter }) => {
   }
 };
 
-export default Name;
+export default Names;
