@@ -4,6 +4,8 @@ import Filter from "./components/Filter";
 import Names from "./components/Names";
 import Form from "./components/Form";
 import personService from "./services/personService";
+import NotifySuccess from "./components/NotifySuccess";
+import NotifyFailure from "./components/NotifyFailure";
 
 const App = () => {
   //store persons & phone numbers
@@ -21,6 +23,8 @@ const App = () => {
   const [newName, setNewName] = useState(""); //add new person
   const [newNumber, setNewNumber] = useState(""); //add new number
   const [filter, setNewFilter] = useState(""); //filter input
+  const [successMessage, setSuccessMessage] = useState(null)
+  const [failureMessage, setFailureMessage] = useState(null)
 
   /*
   useEffect(() => {
@@ -75,6 +79,22 @@ const App = () => {
         //axios.put(`http://localhost:3001/persons/${personIdForServer.id}`, personObject)
         personService
         .update(personIdForServer.id, personObject)
+        .then(successMessage => {
+          setSuccessMessage(
+            `Contact ${newName} updated`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setFailureMessage(
+            `${newName} is no longer on the server`
+          )
+          setTimeout(() => {
+            setFailureMessage(null)
+          }, 5000)
+        })
       }
     } else {
       //passed duplicate test
@@ -91,6 +111,10 @@ const App = () => {
       .then(response => {
         console.log(response);
         setPersons(persons.concat(personObject)); //backend and frontend will have matching data
+        setSuccessMessage(`Created ${personObject.name}`)
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
       })
       setNewName("");
       setNewNumber("");
@@ -101,6 +125,9 @@ const App = () => {
     <div>
       <div>debug: {newName}</div>
       <h1>Phonebook</h1>
+
+      <NotifySuccess successMessage={successMessage} />
+      <NotifyFailure failureMessage={failureMessage} />
 
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
